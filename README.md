@@ -16,9 +16,13 @@
 python -m pip install --upgrade pip
 python -m pip install -r dev-requirements.txt
 ```
-3. Install project libraries
+4. Install project libraries
 ```bash
 python -m pip install -r requirements.txt
+```
+5. Install pre-commit configurations
+```bash
+pre-commit install
 ```
 
 ## Extract data from Open Trip Map
@@ -27,7 +31,7 @@ python -m pip install -r requirements.txt
 ```bash
 export OPENTRIPMAP_APIKEY={your_api_key}`
 ```
-3. Run the data extraction code. 
+3. Run the data extraction code.
 ```bash
 python open_trip_map_data/data_extraction.py
 ```
