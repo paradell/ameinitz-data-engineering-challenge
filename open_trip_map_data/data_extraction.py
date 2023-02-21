@@ -1,9 +1,8 @@
 # Extract 2500 entries from Open Trip Map
 import os
 
-import pandas as pd
 from data_extraction_utils import extract_data
-from data_extraction_utils import parse_opentripmap_entry
+from data_extraction_utils import store_locations_in_dataframe
 
 OPENTRIPMAP_URL = "https://api.opentripmap.com"
 VERSION = "0.1"
@@ -35,15 +34,6 @@ locations = extract_data(url=OPENTRIPMAP_URL,
                          params=request_parameters)
 
 # Store json data in Pandas/Pyspark dataframe
-# Create Dataframe
-df = pd.DataFrame(
-    columns=["xid", "name", "rate", "osm", "wikidata", "kinds", "longitude", "latitude"]
-)
+locations_df = store_locations_in_dataframe(locations=locations)
 
-# Append all entries
-for location in locations:
-    df = pd.concat([df, pd.DataFrame(parse_opentripmap_entry(location))],
-                   axis=0,
-                   ignore_index=True)
-
-print(df.head())
+print(locations_df.head())

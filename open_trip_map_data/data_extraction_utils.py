@@ -1,3 +1,4 @@
+import pandas as pd
 import requests
 
 
@@ -39,3 +40,17 @@ def parse_opentripmap_entry(entry):
         'longitude': entry['point']['lon'],
         'latitude': entry['point']['lat']
     }]
+
+
+def store_locations_in_dataframe(locations):
+    # Create Dataframe
+    df = pd.DataFrame(
+        columns=["xid", "name", "rate", "osm", "wikidata", "kinds", "longitude", "latitude"]
+    )
+
+    # Append all entries
+    for location in locations:
+        df = pd.concat([df, pd.DataFrame(parse_opentripmap_entry(location))],
+                       axis=0,
+                       ignore_index=True)
+    return df
