@@ -9,6 +9,12 @@ repos:
       - id: no-commit-to-branch
         args: [--branch, dev, --branch, master, --branch, main]
 
+  - repo: https://github.com/python/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        language_version: python3
+
   - repo: https://github.com/asottile/reorder_python_imports
     rev: v3.0.1
     hooks:
