@@ -1,7 +1,8 @@
 # Extract 2500 entries from Open Trip Map
 import os
 
-import requests
+from data_extraction_utils import extract_data
+from data_extraction_utils import store_locations_in_dataframe
 
 OPENTRIPMAP_URL = "https://api.opentripmap.com"
 VERSION = "0.1"
@@ -25,14 +26,14 @@ request_parameters = {
     "limit": LIMIT,  # TODO - this parameter is not having any impact on the payload.
     "apikey": os.getenv("OPENTRIPMAP_APIKEY"),
 }
-r = requests.get(f"{OPENTRIPMAP_URL}/{VERSION}/{LANGAUGE}/{ENDPOINT}",
-                 params=request_parameters)
 
-# Validate the data extracted from Open Trip Map
-print(f"{r.status_code}") if r.status_code == 200 else print(
-    f"Something went wrong, " f"API returned {r.status_code} response."
-)
+locations = extract_data(url=OPENTRIPMAP_URL,
+                         version=VERSION,
+                         language=LANGAUGE,
+                         endpoint=ENDPOINT,
+                         params=request_parameters)
 
-print(f"{len(r.json())} rows entries extracted correctly.") if len(r.json()) == LIMIT else print(
-    f"Something went wrong, expected {LIMIT} entries but got {len(r.json())}."
-)
+# Store json data in Pandas/Pyspark dataframe
+locations_df = store_locations_in_dataframe(locations=locations)
+
+print(locations_df.head())
