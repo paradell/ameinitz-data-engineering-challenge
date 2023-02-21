@@ -45,7 +45,7 @@ def extract_data(url, version, language, endpoint, params):
     return r.json()
 
 
-def parse_opentripmap_entry(entry):
+def parse_opentripmap_location_entry(entry):
     # Format the entry to be compatible with the Pandas dataframe used for this challenge
     try:
         osm = entry["osm"]
@@ -89,7 +89,7 @@ def store_locations_in_dataframe(locations):
     # Append all entries
     for location in locations:
         df = pd.concat(
-            [df, pd.DataFrame(parse_opentripmap_entry(location))],
+            [df, pd.DataFrame(parse_opentripmap_location_entry(location))],
             axis=0,
             ignore_index=True,
         )

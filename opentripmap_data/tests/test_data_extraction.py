@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("..")
 
-from opentripmap_data.data_extraction import parse_opentripmap_entry
+from opentripmap_data.data_extraction import parse_opentripmap_location_entry
 
 
 # Test parse_opentripmap_entry
@@ -28,7 +28,7 @@ def test_parse_opentripmap_entry_fully_populated():
             "latitude": 41.38056945800781,
         }
     ]
-    assert parse_opentripmap_entry(entry) == expected_result
+    assert parse_opentripmap_location_entry(entry) == expected_result
 
 
 def test_parse_opentripmap_entry_no_wikidata():
@@ -52,7 +52,7 @@ def test_parse_opentripmap_entry_no_wikidata():
             "latitude": 41.38056945800781,
         }
     ]
-    assert parse_opentripmap_entry(entry) == expected_result
+    assert parse_opentripmap_location_entry(entry) == expected_result
 
 
 def test_parse_opentripmap_entry_no_osm():
@@ -76,7 +76,7 @@ def test_parse_opentripmap_entry_no_osm():
             "latitude": 41.38056945800781,
         }
     ]
-    assert parse_opentripmap_entry(entry) == expected_result
+    assert parse_opentripmap_location_entry(entry) == expected_result
 
 
 def test_parse_opentripmap_entry_no_osm_nor_wikidata():
@@ -99,4 +99,4 @@ def test_parse_opentripmap_entry_no_osm_nor_wikidata():
             "latitude": 41.38056945800781,
         }
     ]
-    assert parse_opentripmap_entry(entry) == expected_result
+    assert parse_opentripmap_location_entry(entry) == expected_result
