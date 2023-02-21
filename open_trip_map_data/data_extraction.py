@@ -25,20 +25,14 @@ request_parameters = {
     "limit": LIMIT,  # TODO - this parameter is not having any impact on the payload.
     "apikey": os.getenv("OPENTRIPMAP_APIKEY"),
 }
-r = requests.get(
-    f"{OPENTRIPMAP_URL}/{VERSION}/{LANGAUGE}/{ENDPOINT}", params=request_parameters
-)
+r = requests.get(f"{OPENTRIPMAP_URL}/{VERSION}/{LANGAUGE}/{ENDPOINT}",
+                 params=request_parameters)
 
 # Validate the data extracted from Open Trip Map
 print(f"{r.status_code}") if r.status_code == 200 else print(
     f"Something went wrong, " f"API returned {r.status_code} response."
 )
 
-print(f"{len(r.json())} rows entries extracted correctly.") if len(
-    r.json()
-) == LIMIT else print(
-    f"Something went wrong"
-    f", expected {LIMIT} "
-    f"entries but got "
-    f"{len(r.json())}."
+print(f"{len(r.json())} rows entries extracted correctly.") if len(r.json()) == LIMIT else print(
+    f"Something went wrong, expected {LIMIT} entries but got {len(r.json())}."
 )
