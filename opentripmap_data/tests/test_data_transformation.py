@@ -8,6 +8,7 @@ sys.path.append("..")
 from opentripmap_data.data_transformation import (
     add_kinds_amount_column,
     filter_by_skyscrappers_accommodations,
+    enrich_locations_dataframe_with_details,
 )
 
 
@@ -63,6 +64,58 @@ def test_filter_by_skyscrappers_accommodations_no_skyscrapper():
     expected_df = pd.DataFrame({"id": [], "kinds": []})
     assert_frame_equal(
         filter_by_skyscrappers_accommodations(input_df).reset_index(drop=True),
+        expected_df,
+        check_dtype=False,
+    )
+
+
+# Tests enrich_locations_dataframe_with_details
+def test_enrich_locations_dataframe_with_details():
+    input_df = pd.DataFrame(
+        {
+            "xid": ["H3869271", "H3869223", "H386944"],
+            "name": ["hotel_1", "hotel_2", "hotel_3"],
+        }
+    )
+    details_df = pd.DataFrame(
+        {"xid": ["H3869271", "H3869223", "H386944"], "stars": [3, 4, 5]}
+    )
+    expected_df = pd.DataFrame(
+        {
+            "xid": ["H3869271", "H3869223", "H386944"],
+            "name": ["hotel_1", "hotel_2", "hotel_3"],
+            "stars": [3, 4, 5],
+        }
+    )
+    print(enrich_locations_dataframe_with_details(input_df, details_df))
+    assert_frame_equal(
+        enrich_locations_dataframe_with_details(input_df, details_df).reset_index(
+            drop=True
+        ),
+        expected_df,
+        check_dtype=False,
+    )
+
+
+def test_enrich_locations_dataframe_with_details_missing_xid():
+    input_df = pd.DataFrame(
+        {"xid": ["H3869271", "H386944"], "name": ["hotel_1", "hotel_3"]}
+    )
+    details_df = pd.DataFrame(
+        {"xid": ["H3869271", "H3869223", "H386944"], "stars": [3, 4, 5]}
+    )
+    expected_df = pd.DataFrame(
+        {
+            "xid": ["H3869271", "H386944"],
+            "name": ["hotel_1", "hotel_3"],
+            "stars": [3, 5],
+        }
+    )
+    print(enrich_locations_dataframe_with_details(input_df, details_df))
+    assert_frame_equal(
+        enrich_locations_dataframe_with_details(input_df, details_df).reset_index(
+            drop=True
+        ),
         expected_df,
         check_dtype=False,
     )

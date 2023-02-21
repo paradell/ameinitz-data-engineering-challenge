@@ -4,3 +4,6 @@ def store_dataframe_as_csv_file(dataframe, output_file):
 
 
 # FRQ-07 - plot into a JPG file
+def plot_dataframe_as_jpg(dataframe, output_file):
+    # TODO
+    pass

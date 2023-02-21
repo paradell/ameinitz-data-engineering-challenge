@@ -1,8 +1,14 @@
 import sys
 
+import pandas as pd
+
 sys.path.append("..")
 
-from opentripmap_data.data_extraction import parse_opentripmap_location_entry
+from opentripmap_data.data_extraction import (
+    parse_opentripmap_location_entry,
+    get_xids_from_locations_dataframe,
+    parse_location_detail_address,
+)
 
 
 # Test parse_opentripmap_entry
@@ -100,3 +106,37 @@ def test_parse_opentripmap_entry_no_osm_nor_wikidata():
         }
     ]
     assert parse_opentripmap_location_entry(entry) == expected_result
+
+
+# Test get_xids_from_locations_dataframe
+def test_get_xids_from_locations_dataframe():
+    input_df = pd.DataFrame(
+        {
+            "xid": ["N3355811093", "N3355811123", "N335581123123"],
+            "kinds": ["accomodations,other_hotels", "accomodations", "beach,sun,sea"],
+        }
+    )
+    xids_list = ["N3355811093", "N3355811123", "N335581123123"]
+
+    assert get_xids_from_locations_dataframe(input_df) == xids_list
+
+
+# Test parse_location_detail_address
+def test_parse_location_detail_address():
+    full_address = {
+        "city": "l'Hospitalet",
+        "road": "Carrer de Jaume Ventura i Tort",
+        "house": "Hotel Hesperia Barcelona Tower",
+        "state": "CAT",
+        "county": "BCN",
+        "suburb": "Bellvitge",
+        "country": "España",
+        "postcode": "08907",
+        "country_code": "es",
+        "house_number": "144",
+        "city_district": "Districte VI",
+    }
+    expected_result = (
+        "Carrer de Jaume Ventura i Tort, 144. 08907 Bellvitge(BCN). España"
+    )
+    assert parse_location_detail_address(full_address) == expected_result

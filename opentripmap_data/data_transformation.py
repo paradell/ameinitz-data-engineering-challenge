@@ -16,3 +16,5 @@ def filter_by_skyscrappers_accommodations(locations_df):
 
 
 # FRQ-05 - For every record in the dataframe add dimensions extracted from OpenTripMap details API information
+def enrich_locations_dataframe_with_details(locations_df, details_df):
+    return locations_df.merge(details_df, on=["xid"], how="inner")

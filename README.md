@@ -57,3 +57,17 @@ tests/test_data_transformation.py::test_filter_by_skyscrappers_accommodations_no
 
 ========= 8 passed in 0.55s =================================
 ```
+
+## Run the code
+1. From the location `{repo_directory}/opentripmap_data`
+2. Execute `python data_pipeline.py`
+3. Check all the steps are executed correctly
+```shell
+Something went wrong, expected 2500 entries but got 500.
+Data extraction ended
+Data Transformation started
+Data Transformation ended
+Storing skyscrapper data in output_files/skyscrappers_bcn_2023-02-21.csv
+File output_files/skyscrappers_bcn_2023-02-21.csv created successfully
+```
+4. Check output files in `opentripmap_data/output_files` directory are correctly created
