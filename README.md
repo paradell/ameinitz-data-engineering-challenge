@@ -16,3 +16,18 @@
 python -m pip install --upgrade pip
 python -m pip install -r dev-requirements.txt
 ```
+3. Install project libraries
+```bash
+python -m pip install -r requirements.txt
+```
+
+## Extract data from Open Trip Map
+1. Have an Open Trip Map account.
+2. Store the Open Trip Map API KEY as a Environment Variable
+```bash
+export OPENTRIPMAP_APIKEY={your_api_key}`
+```
+3. Run the data extraction code. 
+```bash
+python open_trip_map_data/data_extraction.py
+```
